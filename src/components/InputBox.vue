@@ -1,50 +1,50 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
     <p>
       Hello World
     </p>
-    <input type="file"  ref="upload" v-on:change="uploadFile()">
+    <input type="file" v-on:change="uploadFile($event)">
     <button v-if="csvSelected" v-on:click="normalize()">Normalize</button>
   </div>
 </template>
 
-<script>
-import LowMafLog from '../lowMafLog.ts';
+<script lang="ts">
+import LowMafLog from '../lowMafLog';
+import { Vue } from 'vue-class-component';
 
-export default {
-  name: 'InputBox',
-  data() {
-    return {
-      csvSelected: false,
-      file: File,
-      fileString: String,
+export default class InputBox extends Vue{
+  public csvSelected: boolean = false;
+  private file!: File;
+  public logs: LowMafLog[] = [];
+  uploadFile(event: any) {
+    console.log(event.target);
+    console.log("File selected");
+    this.file = event.target.files[0];
+    if(this.file.type != 'text/csv'){
+      this.csvSelected = false;
+      console.log("Not a CSV");
+    }else{
+      this.csvSelected = true;
+      console.log("ayye good shit");
+      console.log("You uploaded: " + this.file.name);
+      console.log(this.file);
     }
-  },
-  methods: {
-    uploadFile() {
-      console.log("File selected");
-      this.file = this.$refs.upload.files[0];
-      if(this.file.type != 'text/csv'){
-        this.csvSelected = false;
-        console.log("Not a CSV");
-      }else{
-        this.csvSelected = true;
-        console.log("ayye good shit");
-        console.log("You uploaded: " + this.file.name);
-        console.log(this.file);
-      }
-    },
-    normalize() {
-      console.log("Checking Data for Errors...");
-      this.readFile(this.file);
-    },
-    readFile(file) {
-      let fileReader = new FileReader(); 
-      fileReader.readAsText(file); 
-      fileReader.onload = function() {
-        this.fileString = fileReader.result;
-        let lines = this.fileString.split(/\r?\n/);
+  }
+  normalize() {
+    console.log("Checking Data for Errors...");
+    this.readFile();
+  }
+  
+  async readFile() {
+    console.log(this.file);
+    let fileReader = new FileReader(); 
+    //let data!: LowMafLog[];
+    fileReader.readAsText(this.file); 
+    //this.logs = this.genLowMafLogs(fileReader.result);
+    fileReader.onload = async function() {
+      let fileString = fileReader.result;
+      if(typeof(fileString) == 'string'){
+        let lines = fileString.split(/\r?\n/);
         let categories = lines[0].split(',');
         console.log(categories);
         let logs = [];
@@ -56,25 +56,23 @@ export default {
           }
         }
         console.log(JSON.stringify(logs));
-      }; 
-      fileReader.onerror = function() {
-        alert(fileReader.error);
-      }; 
-    },
-    async sendData(logs){
-      let apiUrl = "/api/analyze/0";
-      const res = await fetch(apiUrl, {
-        method: 'POST',
-        headers: {
-          'Content-type': 'applications/json',
-          body: JSON.stringify(logs)
-        }
-      })
+        const apiUrl = "http://localhost:8000/api/analyze/0/";
+        const res = await fetch(apiUrl, {
+          method: 'POST',
+          headers: {
+            'accept': 'application/json',
+            'Content-Type': 'application/json',
+            body: JSON.stringify(logs)
+          }
+        })
+        const data = await res.json();
+        console.log(data);
 
-      const data = await res.json();
-      console.log(data);
-    }
-      
+      }
+    }; 
+    fileReader.onerror = function() {
+      alert(fileReader.error);
+    }; 
   }
 }
 </script>
