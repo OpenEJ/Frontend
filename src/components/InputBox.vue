@@ -31,48 +31,60 @@ export default class InputBox extends Vue{
     }
   }
   normalize() {
-    console.log("Checking Data for Errors...");
+    console.log("Checking Data for Errors and Formatting to JSON...");
     this.readFile();
   }
+  buildJson(data: string) {
+    //console.log(data);
+    let lines = data.split(/\r?\n/);
+    let categories = lines[0].split(',');
+    //console.log(categories);
+    let logs = [];
+    for(let i = 1; i < lines.length; i++){
+      if (lines[i] && lines[i] != ""){
+        let lineData = lines[i].split(',');
+        let log = new LowMafLog(categories, lineData);
+        logs.push(log);
+      }
+    }
+    console.log(JSON.stringify(logs));
+    this.apiRequest(logs);
+  }
+
+  apiRequest(logs: LowMafLog[]){
+    const apiUrl = "http://localhost:8000/api/analyze/0/";
+    const requestOptions = {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(logs)
+  };
+    fetch(apiUrl, requestOptions).then(response => response.json())
+    .then(inf => console.log(inf));
+  }
   
-  async readFile() {
-    console.log(this.file);
+  readFile() {
+    //console.log(this.file);
     let fileReader = new FileReader(); 
-    //let data!: LowMafLog[];
     fileReader.readAsText(this.file); 
+    fileReader.onloadend = (() => {
+      
+      if(typeof(fileReader.result) == 'string'){
+        this.buildJson(fileReader.result);
+      }
+    });
+    //console.log(data);
+
     //this.logs = this.genLowMafLogs(fileReader.result);
-    fileReader.onload = async function() {
+    /*fileReader.onload = async function() {
       let fileString = fileReader.result;
       if(typeof(fileString) == 'string'){
-        let lines = fileString.split(/\r?\n/);
-        let categories = lines[0].split(',');
-        console.log(categories);
-        let logs = [];
-        for(let i = 1; i < lines.length; i++){
-          if (lines[i] && lines[i] != ""){
-            let lineData = lines[i].split(',');
-            let log = new LowMafLog(categories, lineData);
-            logs.push(log);
-          }
-        }
+        
         console.log(JSON.stringify(logs));
-        const apiUrl = "http://localhost:8000/api/analyze/0/";
-        const res = await fetch(apiUrl, {
-          method: 'POST',
-          headers: {
-            'accept': 'application/json',
-            'Content-Type': 'application/json',
-            body: JSON.stringify(logs)
-          }
-        })
-        const data = await res.json();
-        console.log(data);
-
       }
-    }; 
+    }; */
     fileReader.onerror = function() {
       alert(fileReader.error);
-    }; 
+    };
   }
 }
 </script>
