@@ -25,7 +25,7 @@ import ClosedLoopMaf from './Pages/ClosedLoopMaf';
 
 export default class Pages extends Vue {
     props: {
-        pageSelected: string = 'Home ';
+        pageSelected: string = 'Home  ';
     }
 
 }
