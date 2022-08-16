@@ -1,33 +1,27 @@
-<!--
-
-Remember to:
-1. Change NewComponentName to the name of the component
-2. Import this component via the file relative file path into ../App.vue
-3. Declare the components under 'components' in App.vue
-
--->
-
 <template>
-    <ClosedLoopMaf v-if="pageSelected == 'Closed Loop MAF Scaling'" />
+    <Home v-if="pageSelected == 'Home'" />
+    <ClosedLoopMaf v-else-if="pageSelected == 'Closed Loop MAF Scaling'" />
+    <About v-else-if="pageSelected == 'About'" />
 </template>
 
 <script lang="ts">
-//Just regular TS here...
 
 import { Options, Vue } from 'vue-class-component';
-import ClosedLoopMaf from './Pages/ClosedLoopMaf';
+import { Prop } from 'vue-property-decorator';
+import ClosedLoopMaf from './Pages/ClosedLoopMaf.vue';
+import Home from './Pages/Home.vue';
+import About from './Pages/About.vue';
 
 @Options({
   components: {
-    ClosedLoopMaf
+    ClosedLoopMaf,
+    Home,
+    About
   },
 })
 
 export default class Pages extends Vue {
-    props: {
-        pageSelected: string = 'Home  ';
-    }
-
+    @Prop({default: 'Home', required: true}) pageSelected!: string;
 }
 
 </script>

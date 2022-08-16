@@ -8,7 +8,7 @@ Remember to:
 -->
 
 <template>
-    <p>This new component works!</p>
+    <h1>Welcome to Automated Subaru Tuning Utilities</h1>
 </template>
 
 <script lang="ts">
@@ -16,9 +16,7 @@ Remember to:
 
 import { Vue } from 'vue-class-component';
 
-export default class NewComponentName extends Vue {
-    //declare variables and write functions here
-
+export default class Home extends Vue {
 }
 
 </script>

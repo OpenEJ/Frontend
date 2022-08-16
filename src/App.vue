@@ -5,7 +5,7 @@
         <NavBar @pageSelected="selectPage($event)" />
       </div>
       <div class="col-10">
-        <Pages/>
+        <Pages :pageSelected="pageSelected"/>
       </div>
     </div>
   </div>
@@ -23,8 +23,12 @@ import Pages from './components/Pages.vue';
   },
 })
 export default class App extends Vue {
+  pageSelected = 'Home';
+
   selectPage(page: string){
-    console.log(page);
+    if (typeof(page) == 'string'){
+      this.pageSelected = page;
+    }
   }
 
 }
