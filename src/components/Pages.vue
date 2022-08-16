@@ -1,0 +1,32 @@
+<template>
+    <Home v-if="pageSelected == 'Home'" />
+    <ClosedLoopMaf v-else-if="pageSelected == 'Closed Loop MAF Scaling'" />
+    <About v-else-if="pageSelected == 'About'" />
+</template>
+
+<script lang="ts">
+
+import { Options, Vue } from 'vue-class-component';
+import { Prop } from 'vue-property-decorator';
+import ClosedLoopMaf from './Pages/ClosedLoopMaf.vue';
+import Home from './Pages/Home.vue';
+import About from './Pages/About.vue';
+
+@Options({
+  components: {
+    ClosedLoopMaf,
+    Home,
+    About
+  },
+})
+
+export default class Pages extends Vue {
+    @Prop({default: 'Home', required: true}) pageSelected!: string;
+}
+
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+
+</style>
