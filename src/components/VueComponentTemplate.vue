@@ -2,8 +2,8 @@
 
 Remember to:
 1. Change NewComponentName to the name of the component
-2. Import this component via the file relative file path into ../App.vue
-3. Declare the components under 'components' in App.vue
+2. Import this component via the file relative file path into parent component
+3. Declare the component under 'components' in parent component
 
 -->
 
@@ -14,7 +14,7 @@ Remember to:
 <script lang="ts">
 //Just regular TS here...
 
-import Vue from 'vue-class-component';
+import { Vue } from 'vue-class-component';
 
 export default class NewComponentName extends Vue {
     //declare variables and write functions here
