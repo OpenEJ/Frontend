@@ -15,3 +15,4 @@ export default class LowMafLog {
         this.cl_ol_status = parseInt(data[categories.indexOf("CL/OL Fueling* (status)")]);
     }
 }
+

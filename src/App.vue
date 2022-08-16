@@ -1,5 +1,5 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
+  <img alt="Sedona Red Pearl Bugeye Impreza WRX" height="300" width="500" src="./assets/lowmaf_icon_0.jpg">
   <InputBox/>
 </template>
 

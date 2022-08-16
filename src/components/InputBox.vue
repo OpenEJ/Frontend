@@ -1,21 +1,41 @@
 <template>
   <div class="hello">
-    <p>
-      Hello World
-    </p>
+    <h1>Low-RPM MAF Scaling</h1>
     <input type="file" v-on:change="uploadFile($event)">
     <button v-if="csvSelected" v-on:click="normalize()">Normalize</button>
+    <br>
+    <br>
+    <table v-if="receivedData" class="table">
+      <thead>
+        <tr>
+          <th>Voltage</th>
+          <th>Scale Value</th>
+          <th>Data Points</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="scale of scales" v-bind:key="scale">
+          <td><b>{{scale.MafVoltage}}</b></td>
+          <td>{{scale.Correction}}</td>
+          <td>{{scale.Frequency}}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 
 <script lang="ts">
 import LowMafLog from '../lowMafLog';
+import LowMafOutput from '../lowMafOuput'
 import { Vue } from 'vue-class-component';
 
 export default class InputBox extends Vue{
   public csvSelected: boolean = false;
+  public receivedData: boolean = false;
   private file!: File;
   public logs: LowMafLog[] = [];
+  public scales: LowMafOutput[] = [];
+
   uploadFile(event: any) {
     console.log(event.target);
     console.log("File selected");
@@ -30,10 +50,12 @@ export default class InputBox extends Vue{
       console.log(this.file);
     }
   }
+
   normalize() {
     console.log("Checking Data for Errors and Formatting to JSON...");
     this.readFile();
   }
+
   buildJson(data: string) {
     //console.log(data);
     let lines = data.split(/\r?\n/);
@@ -59,7 +81,10 @@ export default class InputBox extends Vue{
     body: JSON.stringify(logs)
   };
     fetch(apiUrl, requestOptions).then(response => response.json())
-    .then(inf => console.log(inf));
+    .then(inf => {
+      this.scales = inf;
+      this.receivedData = true;
+    });
   }
   
   readFile() {
@@ -71,21 +96,13 @@ export default class InputBox extends Vue{
       if(typeof(fileReader.result) == 'string'){
         this.buildJson(fileReader.result);
       }
-    });
-    //console.log(data);
+    }); 
 
-    //this.logs = this.genLowMafLogs(fileReader.result);
-    /*fileReader.onload = async function() {
-      let fileString = fileReader.result;
-      if(typeof(fileString) == 'string'){
-        
-        console.log(JSON.stringify(logs));
-      }
-    }; */
     fileReader.onerror = function() {
       alert(fileReader.error);
     };
   }
+
 }
 </script>
 
