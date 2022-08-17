@@ -54,7 +54,8 @@ export default class TipInEnrichment extends Vue {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(logs)
         };
-        fetch(apiUrl, requestOptions).then(response => response.json())
+        console.log(JSON.stringify(logs));
+        fetch(apiUrl, requestOptions).then(response => console.log(response))
         .then(inf => {
         console.log(inf);
         this.receivedData = true;
