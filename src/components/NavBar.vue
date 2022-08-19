@@ -11,7 +11,7 @@
 import { Vue } from 'vue-class-component';
 
 export default class NavBar extends Vue {
-  pages = ['Home', 'Closed Loop MAF Scaling', 'About'];
+  pages = ['Home', 'Closed Loop MAF Scaling', 'Open Loop MAF Scaling', 'Tip in Enrichment', 'About'];
 }
 
 </script>

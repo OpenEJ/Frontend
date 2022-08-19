@@ -2,6 +2,7 @@
     <Home v-if="pageSelected == 'Home'" />
     <ClosedLoopMaf v-else-if="pageSelected == 'Closed Loop MAF Scaling'" />
     <About v-else-if="pageSelected == 'About'" />
+    <TipInEnrichment v-else-if="pageSelected == 'Tip in Enrichment'" />
 </template>
 
 <script lang="ts">
@@ -11,10 +12,12 @@ import { Prop } from 'vue-property-decorator';
 import ClosedLoopMaf from './Pages/ClosedLoopMaf.vue';
 import Home from './Pages/Home.vue';
 import About from './Pages/About.vue';
+import TipInEnrichment from './Pages/TipInEnrichment.vue'
 
 @Options({
   components: {
     ClosedLoopMaf,
+    TipInEnrichment,
     Home,
     About
   },
