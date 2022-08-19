@@ -1,16 +1,17 @@
 
 export default class TieLog {
-    throttle_position: number;
-    throttle_angle_change: number;
-    af_correction_short: number;
-    af_correction_learning: number;
+    engine_speed: number;
+    cl_ol_status: number;
+    throttle_open_angle: number;
+    boost_error: number;
+    tip_in_throttle: number;
+    wideband_afr: number;
     constructor(categories: string[], data: string[]){
-        this.af_correction_short = parseFloat(data[categories.indexOf("A/F Correction #1 (%)")]);
-        this.af_correction_learning = parseFloat(data[categories.indexOf("A/F Learning #1 (%)")]);
-        
-        //NEED TO UPDATE TO CORRECT FIELD NAME
-        this.throttle_angle_change = parseFloat(data[categories.indexOf("A/F Learning #1 (%)")]);
-        this.throttle_position = parseFloat(data[categories.indexOf("A/F Learning #1 (%)")]);
-
+        this.engine_speed = parseInt(data[categories.indexOf("Engine Speed (rpm)")]);
+        this.cl_ol_status = parseInt(data[categories.indexOf("CL/OL Fueling* (status)")]);
+        this.throttle_open_angle = parseFloat(data[categories.indexOf("Throttle Opening Angle (%)")]);
+        this.boost_error = parseFloat(data[categories.indexOf("Boost Error* (psi)")]);
+        this.tip_in_throttle = parseFloat(data[categories.indexOf("Tip-in Throttle* (%)")]);
+        this.wideband_afr = parseFloat(data[categories.indexOf("AEM UEGO Wideband [9600 baud] (AFR Gasoline)")]);
     }
 }

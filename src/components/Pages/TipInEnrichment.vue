@@ -13,6 +13,9 @@ Remember to:
     <br>
     <br>
     <CSV_Input @csvProcessed="buildObjects($event)"/>
+    <br>
+    <br>
+    <TIE_Output v-if="receivedData" :corrections="corrections" />
 
 </template>
 
@@ -21,17 +24,21 @@ Remember to:
 
 import { Vue, Options } from 'vue-class-component';
 import CSV_Input from '../../components/CSV_Input.vue'
+import TIE_Output from './TipInEnrichment/TIE_Output.vue'
 import TieLog from './TipInEnrichment/tieLog'
+import TieCorrections from './TipInEnrichment/tieCorrections'
 
 
 @Options({
   components: {
-    CSV_Input
+    CSV_Input,
+    TIE_Output
   },
 })
 
 export default class TipInEnrichment extends Vue {
     receivedData = false;
+    corrections: TieCorrections[] = [];
 
     buildObjects(data: {categories: string[], lines: string[]}){
         this.receivedData = false;
@@ -54,10 +61,9 @@ export default class TipInEnrichment extends Vue {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(logs)
         };
-        console.log(JSON.stringify(logs));
-        fetch(apiUrl, requestOptions).then(response => console.log(response))
+        fetch(apiUrl, requestOptions).then(response => response.json())
         .then(inf => {
-        console.log(inf);
+        this.corrections = inf;
         this.receivedData = true;
         });
     }
