@@ -3,7 +3,7 @@ export default class TopMafLog {
     throttle_position: number;
     load: number;
     rpm: number;
-    wideband_o2;
+    wideband_o2: number;
     
     constructor(categories: string[], data: string[]){
         this.mass_airflow_voltage = parseFloat(data[categories.indexOf("Mass Airflow Sensor Voltage (V)")]);

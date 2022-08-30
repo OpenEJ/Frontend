@@ -12,25 +12,37 @@ Remember to:
     <img alt="World Rally Blue Gc8 Wrx" height="300" width="500" src="../../assets/carpic_2.jpg">
     <br>
     <br>
-    <CSV_Input @csvProcessed="buildObjects($event)" />
+    <CSV_Input @csvProcessed="parse_csv($event)" />
     <br>
     <br>
+    <OL_MAF_Output v-if="receivedData" :scales="scales" />
+    <br>
+    <br>
+    <TargetAFRs_Input />
 </template>
 
 <script lang="ts">
 //Just regular TS here...
 
 import { Vue, Options } from 'vue-class-component';
-//import OL_MAF_Output from './OpenLoopMaf/OL_MAF_Output.vue';
+import OL_MAF_Output from './OpenLoopMaf/OL_MAF_Output.vue';
 import CSV_Input from '../../components/CSV_Input.vue'
+import TargetAFRs_Input from './OpenLoopMaf/TargetAFRs_Input.vue';
 
 import TopMafLog from './OpenLoopMaf/topMafLog';
-//import TopMafTargetAFRs from './OpenLoopMaf/topMafTargetAFRs';
 import TopMafOutput from './OpenLoopMaf/topMafOutput';
+import TopMafTargetAFRs from './OpenLoopMaf/topMafTargetAFRs';
+
+interface inputData {
+    log: TopMafLog[],
+    targetAfrs: TopMafTargetAFRs[]
+}
 
 @Options({
     components: {
-        CSV_Input
+        CSV_Input,
+        TargetAFRs_Input,
+        OL_MAF_Output
     },
 })
 
@@ -39,8 +51,11 @@ export default class OpenLoppMaf extends Vue {
     title: string = 'Open Loop Mass Air Flow Scaling';
     receivedData: boolean = false;
     scales: TopMafOutput[] = [];
+    
+    csv_logs: TopMafLog[] = [];
+    target_afrs: TopMafTargetAFRs[] = [];
 
-    buildObjects(data: {categories: string[], lines: string[]}){
+    parse_csv(data: {categories: string[], lines: string[]}){
         this.receivedData = false;
         let logs: TopMafLog[] = [];
         data.lines.forEach(line => {
@@ -51,23 +66,26 @@ export default class OpenLoppMaf extends Vue {
             }
         })
             
-        //this.apiRequest(logs);
+        this.csv_logs = logs;
+    }
+
+    parse_targetafrs(){
+
     }
 
     //should accept an array of topMafLog[] and topMafTargetAFRs[]
-    apiRequest(logs: any) {
+    apiRequest(logs: inputData) {
         const apiUrl = "http://localhost:8000/api/analyze/1";
         const requestOptions = {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(logs)
         };
-        // fetch(apiUrl, requestOptions).then(response => response.json())
-        // .then(inf => {
-        // this.scales = inf;
-        // this.receivedData = true;
-        // });
-
+        fetch(apiUrl, requestOptions).then(response => response.json())
+        .then(inf => {
+        this.scales = inf;
+        this.receivedData = true;
+        });
     }
 }
 
