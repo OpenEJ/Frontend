@@ -8,17 +8,53 @@ Remember to:
 -->
 
 <template>
-    <p>This new component works!</p>
+    <h1>{{title}}</h1>
+    <img alt="World Rally Blue Gc8 Wrx" height="300" width="500" src="../../assets/carpic_2.jpg">
+    <br>
+    <br>
+    <CSV_Input @csvProcessed="buildObjects($event)" />
+    <br>
+    <br>
 </template>
 
 <script lang="ts">
 //Just regular TS here...
 
-import { Vue } from 'vue-class-component';
+import { Vue, Options } from 'vue-class-component';
+//import OL_MAF_Output from './OpenLoopMaf/OL_MAF_Output.vue';
+import CSV_Input from '../../components/CSV_Input.vue'
 
+import TopMafLog from './OpenLoopMaf/topMafLog';
+//import TopMafTargetAFRs from './OpenLoopMaf/topMafTargetAFRs';
+import TopMafOutput from './OpenLoopMaf/topMafOutput';
+
+@Options({
+    components: {
+        CSV_Input
+    },
+})
 
 export default class OpenLoppMaf extends Vue {
     //declare variables and write functions here
+    title: string = 'Open Loop Mass Air Flow Scaling';
+    receivedData: boolean = false;
+    scales: TopMafOutput[] = [];
+
+    buildObjects(data: {categories: string[], lines: string[]}){
+        this.receivedData = false;
+        let logs: TopMafLog[] = [];
+        data.lines.forEach(line => {
+            if (line && line != ""){
+                let lineData = line.split(',');
+                let log = new TopMafLog(data.categories, lineData);
+                logs.push(log);
+            }
+        })
+            
+        //this.apiRequest(logs);
+    }
+
+
 
 }
 
