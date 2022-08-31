@@ -26,7 +26,7 @@ export default class TargetAFRs_Input extends Vue{
 
     load: number[] = [];
     rpm: number[] = [];
-    targetafrs: number[] = [];
+    targetafrs: number[][] = [];
 
     updateLoad(value: string) {
         this.load_str = value;
@@ -45,8 +45,14 @@ export default class TargetAFRs_Input extends Vue{
         
         this.load = this.load_str.split("\t").map(entry => { return Number(entry); });
         this.rpm = this.rpm_str.split("\n").map(entry => { return Number(entry); });
+        this.targetafrs = this.targetafrs_str.split("\n").map(row => {
+            return row.split("\t").map( val => {
+                return Number(val);
+            });
+        });
         console.log(`Loads: ${this.load}`);
         console.log(`Rpms: ${this.rpm}`);
+        console.log(`TargetAfrs ${this.targetafrs[1][2]}`);
 
     }
 }
