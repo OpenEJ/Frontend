@@ -47,9 +47,9 @@ export default class TargetAFRs_Input extends Vue{
                 return Number(val);
             });
         });
-        console.log(`Loads: ${this.load}`);
-        console.log(`Rpms: ${this.rpm}`);
-        console.log(`TargetAfrs ${this.targetafrs[1][2]}`);
+        //console.log(this.load);
+        //console.log(this.rpm);
+        //console.log(this.targetafrs);
 
         this.$emit("targetafr_processed", {load: this.load, rpm: this.rpm, targetafrs: this.targetafrs});
     }

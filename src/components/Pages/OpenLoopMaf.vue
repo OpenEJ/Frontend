@@ -15,10 +15,13 @@ Remember to:
     <CSV_Input @csvProcessed="parse_csv($event)" />
     <br>
     <br>
-    <OL_MAF_Output v-if="receivedData" :scales="scales" />
-    <br>
-    <br>
     <TargetAFRs_Input @targetafr_processed="parse_targetafrs($event)"/>
+    <br>
+    <br>
+    <button v-on:click="apiRequest()">Analyze Data</button>
+    <br>
+    <br>
+    <OL_MAF_Output v-if="receivedData" :scales="scales" />
 </template>
 
 <script lang="ts">
@@ -32,11 +35,6 @@ import TargetAFRs_Input from './OpenLoopMaf/TargetAFRs_Input.vue';
 import TopMafLog from './OpenLoopMaf/topMafLog';
 import TopMafOutput from './OpenLoopMaf/topMafOutput';
 import TopMafTargetAFRs from './OpenLoopMaf/topMafTargetAFRs';
-
-interface inputData {
-    log: TopMafLog[],
-    targetAfrs: TopMafTargetAFRs[]
-}
 
 @Options({
     components: {
@@ -56,7 +54,6 @@ export default class OpenLoppMaf extends Vue {
     target_afrs: TopMafTargetAFRs[] = [];
 
     parse_csv(data: {categories: string[], lines: string[]}){
-        this.receivedData = false;
         let logs: TopMafLog[] = [];
         data.lines.forEach(line => {
             if (line && line != ""){
@@ -67,19 +64,28 @@ export default class OpenLoppMaf extends Vue {
         })
             
         this.csv_logs = logs;
+        console.log("Csv Parsed");
     }
 
     parse_targetafrs(data: {load: number[], rpm: number[], targetafrs: number[][]} ){
-
+        for (var j: number = 0; j<data.rpm.length; j++){
+            for (var i: number = 0; i<data.load.length ; i++){
+                let entry = new TopMafTargetAFRs(data.load[i], data.rpm[j], data.targetafrs[j][i]);
+                this.target_afrs.push(entry);
+            }
+        }
+        //console.log(this.target_afrs);
+        console.log("Target Afrs parsed");
     }
 
     //should accept an array of topMafLog[] and topMafTargetAFRs[]
-    apiRequest(logs: inputData) {
+    apiRequest() {
+        const data = { target_afr: this.target_afrs, log_data: this.csv_logs };
         const apiUrl = "http://localhost:8000/api/analyze/1";
         const requestOptions = {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(logs)
+            body: JSON.stringify(data)
         };
         fetch(apiUrl, requestOptions).then(response => response.json())
         .then(inf => {
