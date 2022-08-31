@@ -24,6 +24,10 @@ export default class TargetAFRs_Input extends Vue{
     rpm_str: string = "";
     targetafrs_str: string = "";
 
+    load: number[] = [];
+    rpm: number[] = [];
+    targetafrs: number[] = [];
+
     updateLoad(value: string) {
         this.load_str = value;
     }
@@ -35,9 +39,15 @@ export default class TargetAFRs_Input extends Vue{
     }
     
     parseData() {
-        console.log(`Load: ${this.load_str}`)
-        console.log(`Rpm: ${this.rpm_str}`)
-        console.log(`Target Afrs: ${this.targetafrs_str}`)
+        //console.log(`Load: ${this.load_str}`)
+        //console.log(`Rpm: ${this.rpm_str}`)
+        //console.log(`Target Afrs: ${this.targetafrs_str}`)
+        
+        this.load = this.load_str.split("\t").map(entry => { return Number(entry); });
+        this.rpm = this.rpm_str.split("\n").map(entry => { return Number(entry); });
+        console.log(`Loads: ${this.load}`);
+        console.log(`Rpms: ${this.rpm}`);
+
     }
 }
 </script>
