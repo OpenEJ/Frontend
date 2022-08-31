@@ -1,7 +1,7 @@
 <template>
   <div >
     <input type="file" v-on:change="uploadFile($event)">
-    <button v-if="csvSelected" v-on:click="readCSV()">Generate Scales</button>
+    <button v-if="csvSelected" v-on:click="readCSV()">Parse Log Data</button>
   </div>
 </template>
 

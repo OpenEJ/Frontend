@@ -18,7 +18,7 @@ Remember to:
     <OL_MAF_Output v-if="receivedData" :scales="scales" />
     <br>
     <br>
-    <TargetAFRs_Input />
+    <TargetAFRs_Input @targetafr_processed="parse_targetafrs($event)"/>
 </template>
 
 <script lang="ts">
@@ -69,7 +69,7 @@ export default class OpenLoppMaf extends Vue {
         this.csv_logs = logs;
     }
 
-    parse_targetafrs(){
+    parse_targetafrs(data: {load: number[], rpm: number[], targetafrs: number[][]} ){
 
     }
 

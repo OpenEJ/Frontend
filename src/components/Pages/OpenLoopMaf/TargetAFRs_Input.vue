@@ -12,7 +12,7 @@
             <textarea id="targetafrs" @input="updateTargetAfrs($event.target.value)"></textarea>
         </label>
         <br>
-        <button v-on:click="parseData()">Read Target Afr Data</button>
+        <button v-on:click="parseData()">Parse Target Afr Data</button>
     </div>
 </template>
 
@@ -39,10 +39,7 @@ export default class TargetAFRs_Input extends Vue{
     }
     
     parseData() {
-        //console.log(`Load: ${this.load_str}`)
-        //console.log(`Rpm: ${this.rpm_str}`)
-        //console.log(`Target Afrs: ${this.targetafrs_str}`)
-        
+        //we will parse the data from each of the textarea boxes, and store them in lists
         this.load = this.load_str.split("\t").map(entry => { return Number(entry); });
         this.rpm = this.rpm_str.split("\n").map(entry => { return Number(entry); });
         this.targetafrs = this.targetafrs_str.split("\n").map(row => {
@@ -54,6 +51,7 @@ export default class TargetAFRs_Input extends Vue{
         console.log(`Rpms: ${this.rpm}`);
         console.log(`TargetAfrs ${this.targetafrs[1][2]}`);
 
+        this.$emit("targetafr_processed", {load: this.load, rpm: this.rpm, targetafrs: this.targetafrs});
     }
 }
 </script>
