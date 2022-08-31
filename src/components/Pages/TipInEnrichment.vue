@@ -39,6 +39,7 @@ import TieCorrections from './TipInEnrichment/tieCorrections'
 export default class TipInEnrichment extends Vue {
     receivedData = false;
     corrections: TieCorrections[] = [];
+    url = process.env.VUE_APP_URL;
 
     buildObjects(data: {categories: string[], lines: string[]}){
         this.receivedData = false;
@@ -55,7 +56,8 @@ export default class TipInEnrichment extends Vue {
     }
 
     apiRequest(logs: TieLog[]){
-        const apiUrl = "http://localhost:8002/api/analyze/2/";
+        const apiUrl = this.url + ":8002/api/analyze/2/";
+        console.log(apiUrl);
         const requestOptions = {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -67,7 +69,6 @@ export default class TipInEnrichment extends Vue {
         this.receivedData = true;
         });
     }
-
 }
 
 </script>

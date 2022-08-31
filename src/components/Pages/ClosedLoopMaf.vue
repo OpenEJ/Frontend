@@ -39,6 +39,8 @@ export default class ClosedLoopMaf extends Vue {
     title: string = 'Closed Loop Mass Air Flow Scaling';
     receivedData: boolean = false;
     scales: LowMafOutput[] = [];
+    url = process.env.VUE_APP_URL;
+
 
     buildObjects(data: {categories: string[], lines: string[]}){
         this.receivedData = false;
@@ -56,7 +58,7 @@ export default class ClosedLoopMaf extends Vue {
 
 
     apiRequest(logs: LowMafLog[]){
-        const apiUrl = "http://localhost:8000/api/analyze/0/";
+        const apiUrl = this.url + ":8000/api/analyze/0/";
         const requestOptions = {
             method: "POST",
             headers: { "Content-Type": "application/json" },
