@@ -15,22 +15,16 @@
       <Pages :pageSelected="pageSelected" />
     </q-page-container>
 
+    <q-footer elevated class="bg-dark text-white">
+      <q-toolbar>
+        <q-toolbar-title>
+          Interested in this Project? Check out the code on github!
+        </q-toolbar-title>
+      </q-toolbar>
+      <q-btn push size="15px" icon="bi-github" href="https://github.com/OpenEJ"/>
+    </q-footer>
   </q-layout>
 
-  <!--
-
-  <div class="container">
-    <div class="row">
-      <div class="col-2">
-        <NavBar @pageSelected="selectPage($event)" />
-      </div>
-      <div class="col-10">
-        <Pages :pageSelected="pageSelected"/>
-      </div>
-    </div>
-  </div>
-
-  -->
 </template>
 
 <script lang="ts">
@@ -65,4 +59,5 @@ export default class App extends Vue {
   color: #2c3e50;
   margin-top: 60px;
 }
+
 </style>

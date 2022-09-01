@@ -8,7 +8,7 @@ Remember to:
 -->
 
 <template>
-    <h1>About ASTU</h1>
+    <h1>About Open EJ</h1>
 </template>
 
 <script lang="ts">

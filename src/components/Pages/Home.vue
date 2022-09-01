@@ -8,7 +8,8 @@ Remember to:
 -->
 
 <template>
-    <h1>Welcome to Automated Subaru Tuning Utilities</h1>
+    <h1>Welcome to Open EJ</h1>
+    <h3>Subaru Tuning Utilities</h3>
 </template>
 
 <script lang="ts">
