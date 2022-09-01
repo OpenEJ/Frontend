@@ -9,6 +9,7 @@ Remember to:
 
 <template>
     <h1>Welcome to Automated Subaru Tuning Utilities</h1>
+    <q-icon name="account_box" />
 </template>
 
 <script lang="ts">
