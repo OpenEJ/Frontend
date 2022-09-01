@@ -1,4 +1,24 @@
 <template>
+  <q-layout view="hHh LpR fFf">
+
+    <q-header elevated class="bg-primary text-white">
+      <q-toolbar>
+        <q-toolbar-title>
+          <q-icon name="bi-gear-wide-connected" size="30px" />
+          OpenEJ
+        </q-toolbar-title>
+      </q-toolbar>
+        <NavBar @pageSelected="selectPage($event)" />   
+      </q-header>
+
+    <q-page-container>
+      <Pages :pageSelected="pageSelected" />
+    </q-page-container>
+
+  </q-layout>
+
+  <!--
+
   <div class="container">
     <div class="row">
       <div class="col-2">
@@ -9,6 +29,8 @@
       </div>
     </div>
   </div>
+
+  -->
 </template>
 
 <script lang="ts">
