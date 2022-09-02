@@ -4,7 +4,7 @@
     <!-- Header -->
     <q-header elevated class="bg-primary text-white">
       <q-toolbar>
-        <q-btn dense flat round icon="menu" @click="toggleLeftDrawer"/>
+        <q-btn dense flat round icon="menu" @click="leftDrawerOpen = !leftDrawerOpen"/>
 
         <q-toolbar-title>
           <q-icon name="bi-gear-wide-connected" size="30px" />
@@ -41,7 +41,7 @@
 import { Options, Vue } from 'vue-class-component';
 import NavBar from './components/NavBar.vue';
 import Pages from './components/Pages.vue';
-import { ref } from 'vue';
+//import { ref } from 'vue';
 @Options({
   components: {
     Pages,
@@ -51,7 +51,10 @@ import { ref } from 'vue';
 
 export default class App extends Vue {
   pageSelected = 'Home';
+  leftDrawerOpen = true;
   
+  //FIGURE OUT HOW THATS SUPPOSED TO WORK
+  /*
   setup() {
       const leftDrawerOpen = ref(false);
       return {
@@ -61,6 +64,7 @@ export default class App extends Vue {
         }
       }
   }
+  */
 
   selectPage(page: string){
     if (typeof(page) == 'string'){
