@@ -2,7 +2,7 @@
   <q-layout view="hHh LpR lFf">
 
     <!-- Header -->
-    <q-header elevated class="bg-primary text-white">
+    <q-header elevated class="bg-red-13 text-white">
       <q-toolbar>
         <q-btn dense flat round icon="menu" @click="leftDrawerOpen = !leftDrawerOpen"/>
 
@@ -14,7 +14,7 @@
     </q-header>
 
     <!-- Navigation Drawer -->
-    <q-drawer show-if-above v-model="leftDrawerOpen" side="left" elevated>
+    <q-drawer v-model="leftDrawerOpen" side="left" elevated>
       <NavBar @pageSelected="selectPage($event)" />
     </q-drawer>
     
@@ -51,7 +51,7 @@ import Pages from './components/Pages.vue';
 
 export default class App extends Vue {
   pageSelected = 'Home';
-  leftDrawerOpen = true;
+  leftDrawerOpen = false;
   
   //FIGURE OUT HOW THATS SUPPOSED TO WORK
   /*
