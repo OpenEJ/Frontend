@@ -53,6 +53,8 @@ export default class OpenLoppMaf extends Vue {
     csv_logs: TopMafLog[] = [];
     target_afrs: TopMafTargetAFRs[] = [];
 
+    url = process.env.VUE_APP_URL;
+
     parse_csv(data: {categories: string[], lines: string[]}){
         let logs: TopMafLog[] = [];
         data.lines.forEach(line => {
@@ -80,8 +82,8 @@ export default class OpenLoppMaf extends Vue {
 
     //should accept an array of topMafLog[] and topMafTargetAFRs[]
     apiRequest() {
+        const apiUrl = this.url + ":8001/api/analyze/1";
         const data = { target_afr: this.target_afrs, log_data: this.csv_logs };
-        const apiUrl = "http://localhost:8000/api/analyze/1";
         const requestOptions = {
             method: "POST",
             headers: { "Content-Type": "application/json" },
