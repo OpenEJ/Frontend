@@ -15,15 +15,13 @@ Remember to:
             <div id="explanation">
                 <h6>What This Is</h6>
                 <p>
-                    When it comes to tuning modified vehicles in racing and non-street applications, the standard options of doing this have always been: <br>
+                    When it comes to tuning modified vehicles, the options for doing this have always been: <br>
                     <ol>
                         <li>Pay a professional tuner to tune your vehicle $$$$</li>
                         <li>Buy generic off-the-shelf tunes to flash on your vehicle $$$</li>
-                        <li>Tune your vehicles yourself $</li>
+                        <li>Tune your vehicle yourself $</li>
                     </ol>
                     Each of these options have drawbacks, however. Paying a professional tuner is usually extremely expensive. Buying a cheaper, generic tune is an option that many choose, but these often have reliability issues as they don't match a vehicle perfectly and frequently lead to issues later down the line. Tuning your vehicle yourself has been long thought to be out of the question. This is where the Tactrix OpenPort and RomRaider come in. These tools allow for data logging and ECU reflashing that simplify the tuning process greatly. The <a href="http://www.clicksoft.ro/A-Subie-Newbie-Tuning-Guide-1_0.pdf" target="_blank" rel="noopener">Complete Tuning Guide</a> goes over exactly how this works and how it should be done. The only gap remaining in the process is getting the logged data and turning it into numbers to modify in your ECU. That's where <b>OpenEJ</b> comes in. Our tools are designed to automate the invovled calculations for you so all you need to do is log data, upload it, and reflash.
-
-
                 </p>
             </div>
         </QCard>
@@ -34,36 +32,31 @@ Remember to:
                 <p>
                     <ul>
                         <li>
-                            <a href="https://www.romraider.com/" target="_blank" rel="noopener">RomRaider</a> - A free and open source tool for logging data that works with Subaru vehicles
+                            A working installation of <a href="https://www.romraider.com/" target="_blank" rel="noopener">RomRaider</a> - A free and open source tool for logging data that works with Subaru vehicles
                         </li>
                         <li>
-                            <a href="https://www.tactrix.com/index.php?option=com_content&view=category&layout=blog&id=36&Itemid=58" target="_blank" rel="noopener">Tactrix EcuFlash</a> - A ECU reflashing tool for Subaru vehicles that uses the OpenPort vehicles interface to reflash via OBDII
+                            A working installation of <a href="https://www.tactrix.com/index.php?option=com_content&view=category&layout=blog&id=36&Itemid=58" target="_blank" rel="noopener">Tactrix EcuFlash</a> - An ECU reflashing tool that works on Subaru vehicles which uses the OpenPort vehicles interface to reflash via OBDII
                         </li>
                         <li>
-                            <a href="https://www.tactrix.com/index.php?option=com_virtuemart&page=shop.product_details&flypage=flypage.tpl&product_id=17&Itemid=53&redirected=1&Itemid=53" target="_blank" rel="noopener">Tactrix OpenPort 2.0</a> - The device used to communicate with the ECU over OBDII
+                            Access to a <a href="https://www.tactrix.com/index.php?option=com_virtuemart&page=shop.product_details&flypage=flypage.tpl&product_id=17&Itemid=53&redirected=1&Itemid=53" target="_blank" rel="noopener">Tactrix OpenPort 2.0</a> - The device used to communicate with the vehicle's ECU over OBDII
                         </li>
                         <li>
                             An in-depth read of <a href="http://www.clicksoft.ro/A-Subie-Newbie-Tuning-Guide-1_0.pdf" target="_blank" rel="noopener">The Complete Tuning Guide</a>.
                         </li>
                         <li>
+                           The understanding that this site is only intended to be used for applications where modifying vehicles is legal and welcomed. By clicking the button below, you agree to be 100% confident in your understanding of local automobile modification laws and agree to use openEJ and the tools and products it mentions in a completely, 100% legal way.
+                        </li>
+                        <li>
                            The understanding that by using this site, either directly or indirectly, you agree to assume 100% of all risk and openEJ's creators and contributors shall not be held responsible for any damages or injuries you may receive or cause.
                         </li>
                     </ul>
-                    <q-btn @click="$emit(requirementsMet)">
+                    <q-btn @click="$emit('requirementsMet')">
                         I satisfy all of these requirements
                     </q-btn>
                 </p>
             </div>
         </QCard>
         <br>
-        <QCard class="card">
-            <div id="process">
-                <h6>The Process</h6>
-                <p>
-                    The 
-                </p>
-            </div>
-        </QCard>
     </div>
 </template>
 

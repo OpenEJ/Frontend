@@ -1,5 +1,5 @@
 <template>
-    <Home v-if="pageSelected == 'Home'" />
+    <Home @requirementsMet="$emit('unlockTools')" v-if="pageSelected == 'Home'" />
     <ClosedLoopMaf v-else-if="pageSelected == 'Closed Loop MAF Scaling'" />
     <About v-else-if="pageSelected == 'About'" />
     <TipInEnrichment v-else-if="pageSelected == 'Tip in Enrichment'" />
@@ -28,6 +28,8 @@ import OpenLoopMaf from './Pages/OpenLoopMaf.vue'
 
 export default class Pages extends Vue {
     @Prop({default: 'Home', required: true}) pageSelected!: string;
+
+    
 }
 
 </script>
