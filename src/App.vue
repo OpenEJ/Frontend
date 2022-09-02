@@ -1,4 +1,23 @@
 <template>
+  <q-layout view="hHh LpR lFf">
+
+    <q-header elevated class="bg-primary text-white">
+      <q-toolbar>
+        <q-btn dense flat round icon="menu" />
+
+        <q-toolbar-title>
+          <q-icon name="bi-gear-wide-connected" size="30px" />
+          OpenEJ
+        </q-toolbar-title>
+      </q-toolbar>
+    </q-header>
+
+    <q-drawer show-if-above v-model="leftDrawerOpen" side="left" elevated>
+      <!-- drawer content -->
+      <NavBar @pageSelected="selectPage($event)" />
+    </q-drawer>
+  <!--
+
   <q-layout view="hHh LpR fFf">
 
     <q-header elevated class="bg-primary text-white">
@@ -11,11 +30,12 @@
         <NavBar @pageSelected="selectPage($event)" />   
       </q-header>
 
+  -->
     <q-page-container>
       <Pages :pageSelected="pageSelected" />
     </q-page-container>
 
-    <q-footer elevated class="bg-dark text-white">
+    <q-footer overlay elevated class="bg-dark text-white">
       <q-toolbar>
         <q-toolbar-title>
           Interested in this Project? Check out the code on github!
@@ -38,6 +58,7 @@ import Pages from './components/Pages.vue';
     NavBar
   },
 })
+
 export default class App extends Vue {
   pageSelected = 'Home';
 
@@ -46,7 +67,7 @@ export default class App extends Vue {
       this.pageSelected = page;
     }
   }
-
+  
 }
 </script>
 
