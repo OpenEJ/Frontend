@@ -28,9 +28,9 @@
       <q-toolbar>
         <q-toolbar-title>
           Interested in this Project? Check out the code on github!
+          <q-btn push size="15px" icon="bi-github" href="https://github.com/OpenEJ"/>
         </q-toolbar-title>
       </q-toolbar>
-      <q-btn push size="15px" icon="bi-github" href="https://github.com/OpenEJ"/>
     </q-footer>
 
   </q-layout>
