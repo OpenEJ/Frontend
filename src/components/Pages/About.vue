@@ -8,7 +8,7 @@ Remember to:
 -->
 
 <template>
-    <h1>About ASTU</h1>
+    <h1>About Open EJ</h1>
 </template>
 
 <script lang="ts">
@@ -26,5 +26,8 @@ export default class About extends Vue {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
+h1 {
+    text-align:left;
+    padding: 30px;
+}
 </style>
