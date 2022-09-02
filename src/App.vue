@@ -1,9 +1,10 @@
 <template>
   <q-layout view="hHh LpR lFf">
 
+    <!-- Header -->
     <q-header elevated class="bg-primary text-white">
       <q-toolbar>
-        <q-btn dense flat round icon="menu" />
+        <q-btn dense flat round icon="menu" @click="toggleLeftDrawer"/>
 
         <q-toolbar-title>
           <q-icon name="bi-gear-wide-connected" size="30px" />
@@ -12,29 +13,17 @@
       </q-toolbar>
     </q-header>
 
+    <!-- Navigation Drawer -->
     <q-drawer show-if-above v-model="leftDrawerOpen" side="left" elevated>
-      <!-- drawer content -->
       <NavBar @pageSelected="selectPage($event)" />
     </q-drawer>
-  <!--
-
-  <q-layout view="hHh LpR fFf">
-
-    <q-header elevated class="bg-primary text-white">
-      <q-toolbar>
-        <q-toolbar-title>
-          <q-icon name="bi-gear-wide-connected" size="30px" />
-          OpenEJ
-        </q-toolbar-title>
-      </q-toolbar>
-        <NavBar @pageSelected="selectPage($event)" />   
-      </q-header>
-
-  -->
+    
+    <!-- Page Body -->
     <q-page-container>
       <Pages :pageSelected="pageSelected" />
     </q-page-container>
 
+    <!-- Page Footer -->
     <q-footer overlay elevated class="bg-dark text-white">
       <q-toolbar>
         <q-toolbar-title>
@@ -43,6 +32,7 @@
       </q-toolbar>
       <q-btn push size="15px" icon="bi-github" href="https://github.com/OpenEJ"/>
     </q-footer>
+
   </q-layout>
 
 </template>
@@ -51,7 +41,7 @@
 import { Options, Vue } from 'vue-class-component';
 import NavBar from './components/NavBar.vue';
 import Pages from './components/Pages.vue';
-
+import { ref } from 'vue';
 @Options({
   components: {
     Pages,
@@ -61,6 +51,16 @@ import Pages from './components/Pages.vue';
 
 export default class App extends Vue {
   pageSelected = 'Home';
+  
+  setup() {
+      const leftDrawerOpen = ref(false);
+      return {
+        leftDrawerOpen,
+        toggleLeftDrawer () {
+          leftDrawerOpen.value = !leftDrawerOpen.value;
+        }
+      }
+  }
 
   selectPage(page: string){
     if (typeof(page) == 'string'){
@@ -69,7 +69,8 @@ export default class App extends Vue {
   }
   
 }
-</script>
+
+ </script>
 
 <style>
 #app {
