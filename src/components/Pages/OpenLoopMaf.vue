@@ -8,7 +8,7 @@ Remember to:
 -->
 
 <template>
-    <h1>{{title}}</h1>
+    <h3>{{title}}</h3>
     <img alt="World Rally Blue Gc8 Wrx" height="300" width="500" src="../../assets/carpic_2.jpg">
     <br>
     <br>

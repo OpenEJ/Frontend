@@ -8,8 +8,8 @@ Remember to:
 -->
 
 <template>
-    <h1>Welcome to Open EJ</h1>
-    <h3>Subaru Tuning Utilities</h3>
+    <h3>Welcome to Open EJ</h3>
+    <h5>Subaru Tuning Utilities</h5>
 </template>
 
 <script lang="ts">
@@ -24,12 +24,12 @@ export default class Home extends Vue {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1 {
-    text-align:left;
+h3 {
+    text-align:center;
     padding: 30px;
 }
-h3 {
-    text-align:left;
+h5 {
+    text-align:center;
     padding: 30px;
 }
 </style>

@@ -8,7 +8,7 @@ Remember to:
 -->
 
 <template>
-    <h1>Tip in Enrichment</h1>
+    <h3>Tip in Enrichment</h3>
     <img alt="Black Blobeye STi" height="300" width="500" src="../../assets/carpic_1.jpg">
     <br>
     <br>

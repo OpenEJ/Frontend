@@ -8,7 +8,7 @@ Remember to:
 -->
 
 <template>
-    <h1>{{title}}</h1>
+    <h3>{{title}}</h3>
     <img alt="Sedona Red Pearl Bugeye Impreza WRX" height="300" width="500" src="../../assets/carpic_0.jpg">
     <br>
     <br>
