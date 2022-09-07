@@ -1,31 +1,19 @@
 # Vue Frontend 
 
-## Project setup
-```
-npm install
-```
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-### Compiles and minifies for production
-```
-npm run build
-```
-### Lints and fixes files
-```
-npm run lint
-```
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
-
 ## Status
-### Data Normalization Model
-Currently is able to take uploaded CSV file and convert into an array of JSON objects for each line of the log.
-Further work needs to be put into error handling and verification of correct fields. Model should also be cleaned up/split into different components.
-### UI/UX
-Basically nonexistant...
 
-Currently is just the Vue homepage with the input component beneath it. All output is through the console.
+### Entire site
+Site UI almost complete, still need to finish a couple pages and add in the logo
 
+### Home
+Home page working and styled, requirements menu toggles access to utilities correctly
+
+### Utility Pages
+Working, just need to redesign UI to fit in with the rest of the site
+
+### About
+Still need to setup, probably just going to be a picture of the creators and a brief description of the ideas behind the site
+
+### FAQ
+Still need to create, will be a page dedicated to common mistakes and questions about the sites and utilties
 
