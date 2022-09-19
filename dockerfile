@@ -22,4 +22,3 @@ CMD ["nginx", "-g", "daemon off;"]
 # docker build -t frontend:vue .
 # docker run -p 80:80 --name frontend frontend:vue
 #
-# test test <- IGNORE THIS 
