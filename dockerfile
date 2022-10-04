@@ -17,4 +17,5 @@ CMD ["nginx", "-g", "daemon off;"]
 
 #To run this container:
 # docker build -t frontend:vue .
-# docker run -p 80:80 --name frontend frontend:vue
+# docker run -p 3000:80 --name frontend frontend:vue
+#
