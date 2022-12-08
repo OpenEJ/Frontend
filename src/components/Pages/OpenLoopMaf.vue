@@ -82,7 +82,7 @@ export default class OpenLoppMaf extends Vue {
 
     //should accept an array of topMafLog[] and topMafTargetAFRs[]
     apiRequest() {
-        const apiUrl = this.url + ":8001/api/analyze/1";
+        const apiUrl = this.url + "/api/analyze/1";
         const data = { target_afr: this.target_afrs, log_data: this.csv_logs };
         const requestOptions = {
             method: "POST",
