@@ -56,7 +56,7 @@ export default class TipInEnrichment extends Vue {
     }
 
     apiRequest(logs: TieLog[]){
-        const apiUrl = this.url + ":8002/api/analyze/2/";
+        const apiUrl = this.url + "/api/analyze/2/";
         console.log(apiUrl);
         const requestOptions = {
             method: "POST",

@@ -58,7 +58,7 @@ export default class ClosedLoopMaf extends Vue {
 
 
     apiRequest(logs: LowMafLog[]){
-        const apiUrl = this.url + ":8000/api/analyze/0/";
+        const apiUrl = this.url + "/api/analyze/0/";
         const requestOptions = {
             method: "POST",
             headers: { "Content-Type": "application/json" },
