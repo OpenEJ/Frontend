@@ -38,7 +38,7 @@ export default class NavBar extends Vue {
     //pages available before they accept requirement/disclaimer
     lockedPageList= ['Home', 'About']
     //all pages
-    unlockedPageList = ['Home', 'Closed Loop MAF Scaling', 'Open Loop MAF Scaling', 'Tip in Enrichment', 'About'];
+    unlockedPageList = ['Home', 'Closed Loop MAF Scaling', 'Open Loop MAF Scaling', 'Tip in Enrichment', 'Data Visualization', 'About'];
 
 }
 
