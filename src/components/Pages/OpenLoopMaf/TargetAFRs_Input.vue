@@ -1,13 +1,18 @@
 <template>
-        <div class="fit">
-            <q-input square outlined v-model="load_str" label="Enter Load Values"/>
-            <br>
-            <q-input square outlined v-model="rpm_str" label="Enter Rpm Values"/>
-            <br>
-            <q-input square outlined v-model="targetafrs_str" label="Enter Target AFRs"/>
-            <br>
-            <button v-on:click="parseData()">Parse Target Afr Data</button>
+        <div class="q-pa-md">
+            <div class="row" style="height:100px">
+                <q-input class="col-4" square outlined v-model="load_str" label="Enter Load Values" />
+                
+                <q-input class="col-4" square outlined v-model="rpm_str" label="Enter Rpm Values" />
+                
+                <q-input class="col-4" square outlined v-model="targetafrs_str" label="Enter Target AFRs" />
+            </div>
         </div>
+        <q-btn label="Parse Target Afr Data" 
+                      color="primary"
+                      size="lg"
+                      @click="parseData()"
+                      />
 </template>
 <script lang="ts">
 import { Vue } from 'vue-class-component';
