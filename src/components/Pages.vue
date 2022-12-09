@@ -4,6 +4,7 @@
     <About v-else-if="pageSelected == 'About'" />
     <TipInEnrichment v-else-if="pageSelected == 'Tip in Enrichment'" />
     <OpenLoopMaf v-else-if="pageSelected == 'Open Loop MAF Scaling'" />
+    <DataVisualization v-else-if="pageSelected == 'Data Visualization'" />
 </template>
 
 <script lang="ts">
@@ -15,12 +16,14 @@ import Home from './Pages/Home.vue';
 import About from './Pages/About.vue';
 import TipInEnrichment from './Pages/TipInEnrichment.vue'
 import OpenLoopMaf from './Pages/OpenLoopMaf.vue'
+import DataVisualization from './Pages/DataVisualization.vue'
 
 @Options({
   components: {
     OpenLoopMaf,
     ClosedLoopMaf,
     TipInEnrichment,
+    DataVisualization,
     Home,
     About
   },
