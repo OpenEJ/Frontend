@@ -18,7 +18,11 @@ Remember to:
     <TargetAFRs_Input @targetafr_processed="parse_targetafrs($event)"/>
     <br>
     <br>
-    <button v-on:click="apiRequest()">Analyze Data</button>
+    <q-btn label="Analyze Data" 
+                      color="primary"
+                      size="lg"
+                      @click="apiRequest()"
+                      />
     <br>
     <br>
     <OL_MAF_Output v-if="receivedData" :scales="scales" />
