@@ -6,7 +6,9 @@ export default class DataVisualizationLog {
     td_burst: number;
     td_cont: number;
     feedback_knock_corr: number;
+    fine_knock_corr: number;
     wideband_afr: number;
+    engine_load: number;
     constructor(categories: string[], data: string[]){
         this.engine_speed = parseInt(data[categories.indexOf("Engine Speed (rpm)")]);
         this.boost = parseFloat(data[categories.indexOf("Manifold Relative Pressure (psi)")]);
@@ -15,6 +17,8 @@ export default class DataVisualizationLog {
         this.td_cont = parseFloat(data[categories.indexOf("will find later as well")]);
         this.feedback_knock_corr = parseFloat(data[categories.indexOf("Feedback Knock Correction* (degrees)")]);
         this.wideband_afr = parseFloat(data[categories.indexOf("AEM UEGO Wideband [9600 baud] (AFR Gasoline)")]);
+        this.fine_knock_corr = parseFloat(data[categories.indexOf("Fine Learning Knock Correction (degrees)")]);
+        this.engine_load = parseFloat(data[categories.indexOf("Engine Load (Calculated) (g/rev)")]);
         
         
 

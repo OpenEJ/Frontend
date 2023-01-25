@@ -8,7 +8,7 @@ Remember to:
 -->
 
 <template>
-    <Scatter :data="data" :options="options" />
+    <Bubble :data="data" :options="options" />
 </template>
 
 <script lang="ts">
@@ -23,7 +23,7 @@ import {
   Tooltip,
   Legend
 } from 'chart.js'
-import { Scatter } from 'vue-chartjs'
+import { Bubble } from 'vue-chartjs'
 import PlotData from './plotData'
 import { Prop } from 'vue-property-decorator';
 
@@ -31,7 +31,7 @@ ChartJS.register(LinearScale, PointElement, LineElement, Tooltip, Legend)
 
 @Options({
   components: {
-    Scatter,
+    Bubble,
   },
 })
 
@@ -56,6 +56,19 @@ export default class DataVisualizationPlot extends Vue {
                 ],
             },
             options: {
+                plugins: {
+                    title: {
+                        display: true,
+                        text: this.plot_data.title,
+                        padding: {
+                            top: 10,
+                            bottom: 30
+                        }
+                    },
+                    legend: {
+                        display: false,
+                    }
+                },
                 response: false,
                 layout: {
                     padding: {
