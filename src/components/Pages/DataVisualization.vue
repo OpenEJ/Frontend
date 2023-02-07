@@ -55,7 +55,7 @@ export default class DataVisualization extends Vue {
                 this.plots.push(new PlotData(data, 'Engine Speed (rpm)', "Feedback Knock Correction* (degrees)", "Feedback Knock Correction vs. Engine RPM"));
             }
             if(data.categories.includes("Feedback Knock Correction* (degrees)" && "Fine Learning Knock Correction (degrees)" && "Engine Load (Calculated) (g/rev)")){
-                let data = this.parsedLogs.filter(a => a.feedback_knock_corr  != 0 || a.fine_knock_corr != 0).map(b => new ScatterPoint(b.engine_speed, b.engine_load, (b.feedback_knock_corr + b.fine_knock_corr)*3));
+                let data = this.parsedLogs.filter(a => a.feedback_knock_corr  != 0 || a.fine_knock_corr != 0).map(b => new ScatterPoint(b.engine_speed, b.engine_load, (Math.abs(b.feedback_knock_corr + b.fine_knock_corr))*3));
                 this.plots.push(new PlotData(data, 'Engine Speed (rpm)', 'Calculated Engine Load (g/rev)', "Engine Load vs. Engine RPM where Knock Events Occur"));
             }
             if(data.categories.includes("Manifold Relative Pressure (psi)")){
