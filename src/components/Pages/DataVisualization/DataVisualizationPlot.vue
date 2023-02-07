@@ -8,7 +8,7 @@ Remember to:
 -->
 
 <template>
-    <Scatter :data="data" :options="options" />
+    <Bubble :data="data" :options="options" />
 </template>
 
 <script lang="ts">
@@ -21,17 +21,18 @@ import {
   PointElement,
   LineElement,
   Tooltip,
-  Legend
+  Legend,
+Title
 } from 'chart.js'
-import { Scatter } from 'vue-chartjs'
+import { Bubble } from 'vue-chartjs'
 import PlotData from './plotData'
 import { Prop } from 'vue-property-decorator';
 
-ChartJS.register(LinearScale, PointElement, LineElement, Tooltip, Legend)
+ChartJS.register(LinearScale, PointElement, LineElement, Tooltip, Legend, Title)
 
 @Options({
   components: {
-    Scatter,
+    Bubble,
   },
 })
 
@@ -42,10 +43,6 @@ export default class DataVisualizationPlot extends Vue {
 
     data() {
         return {
-            label: 'Scatter Dataset 1',
-            fill: true,
-            //borderColor: '#ff6384',
-            //backgroundColor: '#ff6384',
             data: {
                 datasets: [
                     { 
@@ -56,15 +53,38 @@ export default class DataVisualizationPlot extends Vue {
                 ],
             },
             options: {
-                response: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: this.plot_data.title,
+                        padding: {
+                            top: 10,
+                            bottom: 10
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: (ctx: any) => {
+                                //return 'RPM: ' + this.plot_data.data[ctx.dataIndex].x + '\nLOAD: ' + this.plot_data.data[ctx.dataIndex].y + '\nKNOCK: ' + (this.plot_data.data[ctx.dataIndex].r / -3);
+                                return this.getTooltip(ctx.dataIndex);
+                            }
+                        }
+                    },
+                    legend: {
+                        display: false
+                    }
+                },
+                response: true,
+                
                 layout: {
                     padding: {
-                        left: 250,
-                        right: 250,
+                        left: 100,
+                        right: 100,
                         top: 100,
                         bottom: 100
                     }
                 },
+                
                 scales : {
                     x: 
                         {
@@ -91,7 +111,16 @@ export default class DataVisualizationPlot extends Vue {
 
             }
         }
+    }
+
+  getTooltip(index: number){
+    if(this.plot_data.r_abbrev != null){
+        return this.plot_data.x_abbrev + ': ' + this.plot_data.data[index].x + ' ' + this.plot_data.y_abbrev + ': ' + this.plot_data.data[index].y + ' ' + this.plot_data.r_abbrev + ': ' + this.plot_data.r_logic(this.plot_data.data[index].r);
+    }else{
+        return this.plot_data.x_abbrev + ': ' + this.plot_data.data[index].x + ' ' + this.plot_data.y_abbrev + ': ' + this.plot_data.data[index].y;
+    }
   }
+
 }
 
 </script>

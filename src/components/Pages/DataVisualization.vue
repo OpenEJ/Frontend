@@ -40,6 +40,7 @@ export default class DataVisualization extends Vue {
 
     buildObjects(data: {categories: string[], lines: string[]}){
         this.receivedData = false;
+        this.plots.length = 0;
         data.lines.forEach(line => {
             if (line && line != ""){
                 let lineData = line.split(',');
@@ -48,22 +49,26 @@ export default class DataVisualization extends Vue {
             }
         })
         this.receivedData = true;
-        if (data.categories.includes("Engine Speed (rpm)")){
-            if(data.categories.includes("Feedback Knock Correction* (degrees)")){
-                let data = this.parsedLogs.map(a => new ScatterPoint(a.engine_speed, a.feedback_knock_corr));
-                this.plots.push(new PlotData(data, 'Engine Speed (rpm)', "Feedback Knock Correction* (degrees)"));
+        if (data.categories.some(a => a == "Engine Speed (rpm)")){
+            if(data.categories.some(fb => fb == "Feedback Knock Correction* (degrees)" || fb == "Feedback Knock Correction (degrees)")){
+                let data = this.parsedLogs.filter(f => f.feedback_knock_corr != 0).map(a => new ScatterPoint(a.engine_speed, a.feedback_knock_corr, 5));
+                this.plots.push(new PlotData(data, 'Engine Speed (rpm)', "Feedback Knock Correction (degrees)", "Feedback Knock Correction vs. Engine RPM", "RPM", "FBKC"));
             }
-            if(data.categories.includes("Manifold Relative Pressure (psi)")){
-                let data = this.parsedLogs.map(a => new ScatterPoint(a.engine_speed, a.boost));
-                this.plots.push(new PlotData(data, 'Engine Speed (rpm)', 'Manifold Relative Pressure (psi)'));
+            if(data.categories.some(fb => (fb == "Feedback Knock Correction* (degrees)" || fb == "Feedback Knock Correction (degrees)")) && data.categories.some(fl => fl == "Fine Learning Knock Correction (degrees)" || fl == "Fine Learning Knock Correction* (degrees)") && data.categories.some(el => el == "Engine Load (Calculated) (g/rev)" || el == "Engine Load* (g/rev)" || el == "Engine Load (g/rev)")){
+                let data = this.parsedLogs.filter(a => a.feedback_knock_corr  != 0 || a.fine_knock_corr != 0).map(b => new ScatterPoint(b.engine_speed, b.engine_load, (Math.abs(b.feedback_knock_corr + b.fine_knock_corr))*3));
+                this.plots.push(new PlotData(data, 'Engine Speed (rpm)', 'Engine Load (g/rev)', "Engine Load vs. Engine RPM where Knock Events Occur", "RPM", "LOAD", "TKNOCK", (x: number) => x/-3));
             }
-            if(data.categories.includes("Primary Wastegate Duty Cycle (%)")){
-                let data = this.parsedLogs.map(a => new ScatterPoint(a.engine_speed, a.wastegate_duty));
-                this.plots.push(new PlotData(data, 'Engine Speed (rpm)', "Primary Wastegate Duty Cycle (%)"));
+            if(data.categories.some(mp => mp == "Manifold Relative Pressure (psi)")){
+                let data = this.parsedLogs.map(a => new ScatterPoint(a.engine_speed, a.boost, 5));
+                this.plots.push(new PlotData(data, 'Engine Speed (rpm)', 'Manifold Relative Pressure (psi)', "Manifold Relative Pressure vs. Engine RPM", "RPM", "PSI"));
             }
-            if(data.categories.includes("AEM UEGO Wideband [9600 baud] (AFR Gasoline)")){
-                let data = this.parsedLogs.map(a => new ScatterPoint(a.engine_speed, a.wideband_afr));
-                this.plots.push(new PlotData(data, 'Engine Speed (rpm)', "AEM UEGO Wideband [9600 baud] (AFR Gasoline)"));
+            if(data.categories.some(wg => wg == "Primary Wastegate Duty Cycle (%)")){
+                let data = this.parsedLogs.map(a => new ScatterPoint(a.engine_speed, a.wastegate_duty, 5));
+                this.plots.push(new PlotData(data, 'Engine Speed (rpm)', "Primary Wastegate Duty Cycle (%)", "Wastegate Duty Cycle vs. Engine RPM", "RPM", "WGDC"));
+            }
+            if(data.categories.some(aem => aem == "AEM UEGO Wideband [9600 baud] (AFR Gasoline)")){
+                let data = this.parsedLogs.map(a => new ScatterPoint(a.engine_speed, a.wideband_afr, 5));
+                this.plots.push(new PlotData(data, 'Engine Speed (rpm)', "AEM UEGO Wideband [9600 baud] (AFR Gasoline)", "Wideband AFR vs. Engine RPM", "RPM", "AFR"));
             }
         }
         //if (this.)
