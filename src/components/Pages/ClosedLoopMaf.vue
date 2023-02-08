@@ -9,7 +9,7 @@ Remember to:
 
 <template>
     <h3>{{title}}</h3>
-    <img alt="Sedona Red Pearl Bugeye Impreza WRX" height="300" width="500" src="../../assets/carpic_0.jpg">
+    <img v-if="!receivedData" alt="Sedona Red Pearl Bugeye Impreza WRX" height="281" width="500" src="../../assets/carpic_0.jpg">
     <br>
     <br>
     <CSV_Input @csvProcessed="buildObjects($event)" />
