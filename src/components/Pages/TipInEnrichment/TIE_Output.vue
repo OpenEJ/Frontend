@@ -36,7 +36,7 @@ import TieCorrections from '././tieCorrections';
 
 
 export default class TIE_Output extends Vue {
-        @Prop({default: [], required: true}) corrections!: TieCorrections[];
+  @Prop({default: [], required: true}) corrections!: TieCorrections[];
 
 
 }

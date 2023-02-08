@@ -36,7 +36,7 @@ import TopMafOutput from './topMafOutput';
 
 
 export default class OL_MAF_Output extends Vue {
-        @Prop({default: [], required: true}) scales!: TopMafOutput[];
+  @Prop({default: [], required: true}) scales!: TopMafOutput[];
 
 
 }
