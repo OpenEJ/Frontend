@@ -50,14 +50,16 @@ Remember to:
                            The understanding that by using this site, either directly or indirectly, you agree to assume 100% of all risk and OpenEJ's creators and contributors shall not be held responsible for any damages or injuries you may receive or cause.
                         </li>
                     </ul>
+                    <!--
                     <q-btn @click="metRequirements()">
                         I satisfy all of these requirements
                     </q-btn>
+                    -->
                 </p>
             </div>
         </QCard>
         <br>
-        <QCard v-if="requirementsMet" class="card">
+        <QCard class="card">
             <div id="howto">
                 <h6>How To Use OpenEJ</h6>
                 <p>
