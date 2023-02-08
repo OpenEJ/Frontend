@@ -9,7 +9,7 @@ Remember to:
 
 <template>
     <h3>{{title}}</h3>
-    <img alt="World Rally Blue Gc8 Wrx" height="300" width="500" src="../../assets/carpic_2.jpg">
+    <img v-if="!receivedData" alt="World Rally Blue Gc8 Wrx" height="333" width="500" src="../../assets/carpic_2.jpg">
     <br>
     <br>
     <CSV_Input @csvProcessed="parse_csv($event)" />

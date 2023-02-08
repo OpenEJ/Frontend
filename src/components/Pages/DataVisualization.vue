@@ -8,6 +8,10 @@ Remember to:
 -->
 
 <template>
+    <h3>{{title}}</h3>
+    <img v-if="!receivedData" alt="Subaru Legacy B4" height="333" width="500" src="../../assets/carpic_3.jpg">
+    <br>
+    <br>
     <CSV_Input @csvProcessed="buildObjects($event)" />
     <div v-if="receivedData">
         <DataVisualizationPlot v-for="plot of plots" v-bind:key="plot"  :plot_data="plot"/>
@@ -34,6 +38,7 @@ import DataVisualizationPlot from './DataVisualization/DataVisualizationPlot.vue
 
 export default class DataVisualization extends Vue {
     //declare variables and write functions here
+    title: string = "Data Visualization";
     receivedData: boolean = false;
     parsedLogs: DataVisualizationLog[] = []
     plots: PlotData[] = [];

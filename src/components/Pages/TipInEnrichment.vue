@@ -9,7 +9,7 @@ Remember to:
 
 <template>
     <h3>Tip in Enrichment</h3>
-    <img alt="Black Blobeye STi" height="300" width="500" src="../../assets/carpic_1.jpg">
+    <img v-if="!receivedData" alt="Black Blobeye STi" height="334" width="500" src="../../assets/carpic_1.jpg">
     <br>
     <br>
     <CSV_Input @csvProcessed="buildObjects($event)"/>
