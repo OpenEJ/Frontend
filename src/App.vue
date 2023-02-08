@@ -15,11 +15,11 @@
 
     <!-- Navigation Drawer -->
     <q-drawer v-model="leftDrawerOpen" side="left" elevated>
-      <NavBar @pageSelected="selectPage($event)" @attemptLockedTool="showLockedToolBanner = true" :toolsLocked="toolsLocked" />
+      <NavBar @pageSelected="selectPage($event)" />
     </q-drawer>
     <!-- Page Body -->
     <q-page-container>
-      <Pages @unlockTools="toolsLocked = false" :pageSelected="pageSelected" />
+      <Pages :pageSelected="pageSelected" />
     </q-page-container>
 
     <!-- Page Footer -->
@@ -53,8 +53,6 @@ import Pages from './components/Pages.vue';
 export default class App extends Vue {
   pageSelected = 'Home';
   leftDrawerOpen = false;
-  toolsLocked = true;
-  showLockedToolBanner = false;
   
   //FIGURE OUT HOW THATS SUPPOSED TO WORK
   /*

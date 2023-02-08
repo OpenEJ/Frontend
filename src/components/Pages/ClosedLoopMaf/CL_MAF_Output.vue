@@ -36,7 +36,7 @@ import LowMafOutput from './lowMafOutput';
 
 
 export default class CL_MAF_Output extends Vue {
-        @Prop({default: [], required: true}) scales!: LowMafOutput[];
+  @Prop({default: [], required: true}) scales!: LowMafOutput[];
 
 
 }

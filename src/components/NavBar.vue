@@ -20,12 +20,8 @@
 
 <script lang="ts">
 import { Vue } from 'vue-class-component';
-import { Prop } from 'vue-property-decorator';
 
 export default class NavBar extends Vue {
-    @Prop({default: true, required: true}) toolsLocked!: boolean;
-    //pages available before they accept requirement/disclaimer
-    //lockedPageList= ['Home', 'About']
     //all pages
     pageList = ['Home', 'Closed Loop MAF Scaling', 'Open Loop MAF Scaling', 'Tip in Enrichment', 'Data Visualization', 'About'];
 
