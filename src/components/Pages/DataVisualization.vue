@@ -12,30 +12,57 @@ Remember to:
     <img v-if="!receivedData" alt="Subaru Legacy B4" height="333" width="500" src="../../assets/carpic_3.jpg">
     <br>
     <br>
-    <q-card class="my-card" bordered
-            style="width:500px;">
-        <q-card-section>
-            <div class="text-h6 text-grey-8">
-                Filters
-            </div>
-        </q-card-section>
-        <q-separator/>
-        <q-card-section>
-            Hello there
-        </q-card-section>
-        <q-card-actions align="center">
-            <q-btn label="Go Somewhere" class="text-capitalize q-ma-sm" color="indigo-7"/>
-        </q-card-actions>
-    </q-card>
+        <q-card class="my-card" bordered>
+            <q-card-section>
+                <div class="text-h6 text-grey-8">
+                    Filters
+                </div>
+            </q-card-section>
+            <q-separator/>
+            <q-card-actions align="center">
+                <div class="q-pa-md">
+                    <!-- RPM Filter-->
+                    <q-badge color="primary" class="q-mb-lg">
+                        <h6>Engine Speed</h6>
+                    </q-badge>
+                    <q-range
+                        v-model="rpmFilter"
+                        :min="0"
+                        :max="10000"
+                        :step="100"
+                        label-always
+                    />
+                    <!-- Load Filter-->
+                    <q-badge color="primary" class="q-mb-lg">
+                        <h6>Engine Load</h6>
+                    </q-badge>
+                    <q-range
+                        v-model="loadFilter"
+                        :min="0.0"
+                        :max="10.0"
+                        :step="0.1"
+                        label-always
+                    />
+                    <!-- Boost Filter-->
+                    <q-badge color="primary" class="q-mb-lg">
+                        <h6>Boost</h6>
+                    </q-badge>
+                    <q-range
+                        v-model="boostFilter"
+                        :min="-50.0"
+                        :max="50.0"
+                        :step="0.1"
+                        label-always
+                    />
+                </div>
+            </q-card-actions>
+        </q-card>
     <br>
     <br>
     <CSV_Input @csvProcessed="buildObjects($event)" />
     <div v-if="receivedData">
         <DataVisualizationPlot v-for="plot of plots" v-bind:key="plot"  :plot_data="plot"/>
     </div>
-    
-
-
 </template>
 
 <script lang="ts">
@@ -60,12 +87,28 @@ export default class DataVisualization extends Vue {
     parsedLogs: DataVisualizationLog[] = [];
     plots: PlotData[] = [];
     
-    filters = {
-        rpm: [0,100000],
-        load: [1.0, 100],
-        boost: [0.0,1000],
-        // throttle: [0,100],
+    // filters
+    rpmFilter = {
+        min: 1000,
+        max: 10000,
     };
+    loadFilter = {
+        min: 1.0,
+        max: 100.0,
+    };
+    boostFilter = {
+        min: 0.0,
+        max: 50.0,
+    };
+    filters = {
+        rpm: this.rpmFilter,
+        load: this.loadFilter,
+        boost: this.boostFilter,
+    };
+    rawData = {
+        categories: [],
+        lines: [],
+    }
     filteredLogs: DataVisualizationLog[] = [];
 
     buildObjects(data: {categories: string[], lines: string[]}){
@@ -81,12 +124,12 @@ export default class DataVisualization extends Vue {
 
         // filter data
         this.filteredLogs = this.parsedLogs.filter( a => 
-                                                    a.engine_speed >= this.filters.rpm[0] && 
-                                                    a.engine_speed <= this.filters.rpm[1] &&
-                                                    a.engine_load >= this.filters.load[0] &&
-                                                    a.engine_load <= this.filters.load[1] &&
-                                                    a.boost >= this.filters.boost[0] &&
-                                                    a.boost <= this.filters.boost[1]
+                                                    a.engine_speed >= this.filters.rpm.min && 
+                                                    a.engine_speed <= this.filters.rpm.max &&
+                                                    a.engine_load >= this.filters.load.min &&
+                                                    a.engine_load <= this.filters.load.max &&
+                                                    a.boost >= this.filters.boost.min &&
+                                                    a.boost <= this.filters.boost.max
                                                 );
 
         this.receivedData = true;
