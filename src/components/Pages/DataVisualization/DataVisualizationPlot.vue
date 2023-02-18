@@ -25,7 +25,7 @@ import {
 } from 'chart.js'
 import { Bubble } from 'vue-chartjs'
 import PlotData from './plotData'
-import { defineComponent } from 'vue';
+import { defineComponent, PropType } from 'vue';
 
 ChartJS.register(LinearScale, PointElement, LineElement, Tooltip, Legend, Title)
 
@@ -36,18 +36,18 @@ export default defineComponent ({
     },
     props: {
         plot_data: {
-            type: Object as () => PlotData,
+            type: Object as PropType<PlotData>,
             required: true
         }
     },
-    data(props) {
+    setup(props) {
         const getTooltip = (index: number) => {
             if(props.plot_data.r_abbrev != null){
                 return props.plot_data.x_abbrev + ': ' + props.plot_data.data[index].x + ' ' + props.plot_data.y_abbrev + ': ' + props.plot_data.data[index].y + ' ' + props.plot_data.r_abbrev + ': ' + props.plot_data.r_logic(props.plot_data.data[index].r);
             }else{
                 return props.plot_data.x_abbrev + ': ' + props.plot_data.data[index].x + ' ' + props.plot_data.y_abbrev + ': ' + props.plot_data.data[index].y;
             }
-        }
+        };
         return {
             data: {
                 datasets: [
