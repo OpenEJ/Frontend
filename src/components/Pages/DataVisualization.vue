@@ -12,6 +12,23 @@ Remember to:
     <img v-if="!receivedData" alt="Subaru Legacy B4" height="333" width="500" src="../../assets/carpic_3.jpg">
     <br>
     <br>
+    <q-card class="my-card" bordered
+            style="width:500px;">
+        <q-card-section>
+            <div class="text-h6 text-grey-8">
+                Filters
+            </div>
+        </q-card-section>
+        <q-separator/>
+        <q-card-section>
+            Hello there
+        </q-card-section>
+        <q-card-actions align="center">
+            <q-btn label="Go Somewhere" class="text-capitalize q-ma-sm" color="indigo-7"/>
+        </q-card-actions>
+    </q-card>
+    <br>
+    <br>
     <CSV_Input @csvProcessed="buildObjects($event)" />
     <div v-if="receivedData">
         <DataVisualizationPlot v-for="plot of plots" v-bind:key="plot"  :plot_data="plot"/>
