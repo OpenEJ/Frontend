@@ -26,13 +26,12 @@ Remember to:
                         <h6>Engine Speed</h6>
                     </q-badge>
                     <q-range
-                        v-model="selectedValues"
+                        v-model="rpmFilter"
                         :min="0"
                         :max="10000"
                         :step="100"
                         label-always
                     />
-                    <button @click="handleButtonClick()">Get Selected Values</button>
                     <!-- Load Filter-->
                     <q-badge color="primary" class="q-mb-lg">
                         <h6>Engine Load</h6>
@@ -94,37 +93,26 @@ export default defineComponent ({
         let parsedLogs: DataVisualizationLog[] = [];
         let plots: PlotData[] = [];
         
-        const selectedValues = ref(
+        // filters
+        const rpmFilter = ref(
             {
                 min: 1000,
                 max: 10000
             }
         );
-        // filters
-        const rpmFilter = {
-            min: 1000,
-            max: 10000,
-        };
-        const loadFilter = {
-            min: 1.0,
-            max: 100.0,
-        };
-        const boostFilter = {
-            min: 0.0,
-            max: 50.0,
-        };
-        const filters = {
-            rpm: rpmFilter,
-            load: loadFilter,
-            boost: boostFilter,
-        };
+        const loadFilter = ref(
+            {
+                min: 0.0,
+                max: 100.0
+            }
+        );
+        const boostFilter = ref(
+            {
+                min: 0.0,
+                max: 50.0
+            }
+        );
         let filteredLogs: DataVisualizationLog[] = [];
-
-        const handleButtonClick = () => {
-            const minValue = selectedValues.value.min;
-            const maxValue = selectedValues.value.max;
-            console.log(minValue, maxValue);
-        }
 
         const buildObjects = (data: {categories: string[], lines: string[]}) => {
             receivedData = false;
@@ -139,12 +127,12 @@ export default defineComponent ({
 
             // filter data
             filteredLogs = parsedLogs.filter( a => 
-                                                        a.engine_speed >= filters.rpm.min && 
-                                                        a.engine_speed <= filters.rpm.max &&
-                                                        a.engine_load >= filters.load.min &&
-                                                        a.engine_load <= filters.load.max &&
-                                                        a.boost >= filters.boost.min &&
-                                                        a.boost <= filters.boost.max
+                                                        a.engine_speed >= rpmFilter.value.min && 
+                                                        a.engine_speed <= rpmFilter.value.max &&
+                                                        a.engine_load >= loadFilter.value.min &&
+                                                        a.engine_load <= loadFilter.value.max &&
+                                                        a.boost >= boostFilter.value.min &&
+                                                        a.boost <= boostFilter.value.max
                                                     );
 
             receivedData = true;
@@ -175,13 +163,12 @@ export default defineComponent ({
         return {
             // methods
             buildObjects,
-            handleButtonClick,
 
             // variables
-            selectedValues,
             receivedData,
             title,
             plots,
+            rpmFilter,
             loadFilter,
             boostFilter,
         }
