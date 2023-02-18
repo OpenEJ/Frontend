@@ -60,8 +60,9 @@ Remember to:
     <br>
     <br>
     <CSV_Input @csvProcessed="buildObjects($event)" />
-    <div v-if="receivedData">
-        <DataVisualizationPlot v-for="plot of plots" v-bind:key="plot"  :plot_data="plot"/>
+    <div v-if="receivedData.value">
+        <!-- Using index as unique id (key) -->
+        <DataVisualizationPlot v-for="(plot, index) of plots" v-bind:key="index"  :plot_data="plot"/>
     </div>
 </template>
 
@@ -71,16 +72,9 @@ import DataVisualizationLog from './DataVisualization/dataVisLog';
 import ScatterPoint from './DataVisualization/dataPoint'
 import PlotData from './DataVisualization/plotData';
 import DataVisualizationPlot from './DataVisualization/DataVisualizationPlot.vue'
-import { defineComponent } from 'vue';
+import { defineComponent , reactive } from 'vue';
 import { ref } from 'vue';
-/*
-@Options({
-  components: {
-    CSV_Input,
-    DataVisualizationPlot,
-  },
-})
-*/
+
 export default defineComponent ({
     components: {
         CSV_Input,
@@ -89,9 +83,9 @@ export default defineComponent ({
     setup() {
         //declare variables and write functions here
         const title: string = "Data Visualization";
-        let receivedData: boolean = false;
+        const receivedData = reactive({value: false}); // reactive is a new vue3 feature that keeps stuff constantly updated
         let parsedLogs: DataVisualizationLog[] = [];
-        let plots: PlotData[] = [];
+        let plots = reactive<PlotData[]> ([]);
         
         // filters
         const rpmFilter = ref(
@@ -115,7 +109,7 @@ export default defineComponent ({
         let filteredLogs: DataVisualizationLog[] = [];
 
         const buildObjects = (data: {categories: string[], lines: string[]}) => {
-            receivedData = false;
+            receivedData.value = false;
             plots.length = 0;
             data.lines.forEach(line => {
                 if (line && line != ""){
@@ -127,15 +121,15 @@ export default defineComponent ({
 
             // filter data
             filteredLogs = parsedLogs.filter( a => 
-                                                        a.engine_speed >= rpmFilter.value.min && 
-                                                        a.engine_speed <= rpmFilter.value.max &&
-                                                        a.engine_load >= loadFilter.value.min &&
-                                                        a.engine_load <= loadFilter.value.max &&
-                                                        a.boost >= boostFilter.value.min &&
-                                                        a.boost <= boostFilter.value.max
-                                                    );
+                                                a.engine_speed >= rpmFilter.value.min && 
+                                                a.engine_speed <= rpmFilter.value.max &&
+                                                a.engine_load >= loadFilter.value.min &&
+                                                a.engine_load <= loadFilter.value.max &&
+                                                a.boost >= boostFilter.value.min &&
+                                                a.boost <= boostFilter.value.max
+                                            );
 
-            receivedData = true;
+            receivedData.value = true;
             if (data.categories.some(a => a == "Engine Speed (rpm)")){
                 if(data.categories.some(fb => fb == "Feedback Knock Correction* (degrees)" || fb == "Feedback Knock Correction (degrees)")){
                     let data = filteredLogs.filter(f => f.feedback_knock_corr != 0).map(a => new ScatterPoint(a.engine_speed, a.feedback_knock_corr, 5));
@@ -158,8 +152,9 @@ export default defineComponent ({
                     plots.push(new PlotData(data, 'Engine Speed (rpm)', "AEM UEGO Wideband [9600 baud] (AFR Gasoline)", "Wideband AFR vs. Engine RPM", "RPM", "AFR"));
                 }
             }
+            console.log(plots);
         }
-        // return any methods or variables that need to be accessed outside
+        // return any methods or variables that need to be accessed outside the function
         return {
             // methods
             buildObjects,
