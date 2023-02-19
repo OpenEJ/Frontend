@@ -60,7 +60,7 @@ Remember to:
     <br>
     <br>
     <CSV_Input @csvProcessed="buildObjects($event)" />
-    <div v-if="receivedData.value">
+    <div v-if="receivedData.value" :key="key">
         <!-- Using index as unique id (key) -->
         <DataVisualizationPlot v-for="(plot, index) of plots" v-bind:key="index"  :plot_data="plot"/>
     </div>
@@ -72,7 +72,7 @@ import DataVisualizationLog from './DataVisualization/dataVisLog';
 import ScatterPoint from './DataVisualization/dataPoint'
 import PlotData from './DataVisualization/plotData';
 import DataVisualizationPlot from './DataVisualization/DataVisualizationPlot.vue'
-import { defineComponent , reactive } from 'vue';
+import { defineComponent , reactive, watch } from 'vue';
 import { ref } from 'vue';
 
 export default defineComponent ({
@@ -83,7 +83,7 @@ export default defineComponent ({
     setup() {
         //declare variables and write functions here
         const title: string = "Data Visualization";
-        const receivedData = reactive({value: false}); // reactive is a new vue3 feature that keeps stuff constantly updated
+        const receivedData = reactive({value: false}); // reactive is a new vue3 feature that creates a reactive reference to an object
         let parsedLogs: DataVisualizationLog[] = [];
         let plots = reactive<PlotData[]> ([]);
         
@@ -154,6 +154,16 @@ export default defineComponent ({
             }
             console.log(plots);
         }
+
+        const key = ref(0);
+        watch(plots, () => 
+            {
+                // reload the DataVisualizationPlot component, when plots changes
+                key.value += 1; // when vue detects that the key changes, it will reload that component
+            },
+            {deep: true} // enables deep watching, which watches the properties of PlotData for changes
+        )
+
         // return any methods or variables that need to be accessed outside the function
         return {
             // methods
@@ -166,6 +176,7 @@ export default defineComponent ({
             rpmFilter,
             loadFilter,
             boostFilter,
+            key,
         }
     }
 
