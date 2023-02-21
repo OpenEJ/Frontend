@@ -72,7 +72,7 @@ import DataVisualizationLog from './DataVisualization/dataVisLog';
 import ScatterPoint from './DataVisualization/dataPoint'
 import PlotData from './DataVisualization/plotData';
 import DataVisualizationPlot from './DataVisualization/DataVisualizationPlot.vue'
-import { defineComponent , reactive, watch } from 'vue';
+import { defineComponent , reactive/*, watch*/ } from 'vue';
 import { ref } from 'vue';
 
 export default defineComponent ({
@@ -107,10 +107,11 @@ export default defineComponent ({
             }
         );
         let filteredLogs: DataVisualizationLog[] = [];
+        const key = ref(0);
 
         const buildObjects = (data: {categories: string[], lines: string[]}) => {
             receivedData.value = false;
-            plots.length = 0;
+            plots.length = 0; // clear the reactive list
             data.lines.forEach(line => {
                 if (line && line != ""){
                     let lineData = line.split(',');
@@ -154,9 +155,11 @@ export default defineComponent ({
                     plots.push(new PlotData(data, 'Engine Speed (rpm)', "AEM UEGO Wideband [9600 baud] (AFR Gasoline)", "Wideband AFR vs. Engine RPM", "RPM", "AFR"));
                 }
             }
+            key.value += 1;
             console.log(plots);
         }
 
+        /*
         const key = ref(0);
         watch(plots, () => 
             {
@@ -165,6 +168,7 @@ export default defineComponent ({
             },
             {deep: true} // enables deep watching, which watches the properties of PlotData for changes
         )
+        */
 
         // return any methods or variables that need to be accessed outside the function
         return {
