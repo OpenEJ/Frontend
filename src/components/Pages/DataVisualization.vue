@@ -119,16 +119,6 @@ export default defineComponent ({
                 }
             })
 
-            // filter data
-            filteredLogs = parsedLogs.filter( a => 
-                                                a.engine_speed >= rpmFilter.value.min && 
-                                                a.engine_speed <= rpmFilter.value.max &&
-                                                a.engine_load >= loadFilter.value.min &&
-                                                a.engine_load <= loadFilter.value.max &&
-                                                a.boost >= boostFilter.value.min &&
-                                                a.boost <= boostFilter.value.max
-                                            );
-
             receivedData.value = true;
             if (data.categories.some(a => a == "Engine Speed (rpm)")){
                 filteredLogs = parsedLogs.filter( a=>
