@@ -155,9 +155,22 @@ export default defineComponent ({
                     plots.push(new PlotData(data, 'Engine Speed (rpm)', "AEM UEGO Wideband [9600 baud] (AFR Gasoline)", "Wideband AFR vs. Engine RPM", "RPM", "AFR"));
                 }
             }
+            clearParsedLogs();
             key.value += 1;
             console.log(plots);
         }
+
+        // remove data stored in ```parsedLogs```
+        /*
+            Idea: 
+                If a user switches from one log file to another, the data from the original log file stayed saved in parsedLogs
+                If parsedLogs is never cleared a user will see overlapping data from both logs when charts are reloaded
+                Therefore parsedLogs should be cleared each time buildObjects() is run
+        */
+        const clearParsedLogs = () => {
+            parsedLogs.length = 0;
+        }
+
 
         /*
         const key = ref(0);
