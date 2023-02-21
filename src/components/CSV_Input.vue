@@ -1,14 +1,37 @@
 <template>
-  <div >
+
+    <!--
     <input type="file" v-on:change="uploadFile($event)">
     <button v-if="csvSelected" v-on:click="readCSV()">Parse Log Data</button>
-  </div>
+    -->
+    <div class="q-pa-md">
+      <div class="q-gutter-md" style="max-width: 300px">
+        <q-file 
+          outlined 
+          v-model="file"
+          accept=".csv"
+          style="height: 40px"
+        >
+          <q-icon name="attach_file" size="2em" style="padding:20px" />
+        </q-file>
+      </div>
+    </div>
 </template>
 
 <script lang="ts">
-import { Vue } from 'vue-class-component';
+import { defineComponent, ref } from "vue";
 
-export default class CSV_Input extends Vue{
+export default defineComponent ({
+  name: "csv-input",
+  setup() {
+    const file = ref(null);
+    
+    return {
+      file,
+    }
+
+  }
+  /*
   csvSelected: boolean = false;
   file!: File;
 
@@ -40,10 +63,12 @@ export default class CSV_Input extends Vue{
       alert(fileReader.error);
     };
   }
+  */
 
-}
+})
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style scoped> 
+
 </style>
