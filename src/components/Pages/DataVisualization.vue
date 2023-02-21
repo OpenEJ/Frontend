@@ -131,15 +131,27 @@ export default defineComponent ({
 
             receivedData.value = true;
             if (data.categories.some(a => a == "Engine Speed (rpm)")){
+                filteredLogs = parsedLogs.filter( a=>
+                                                    a.engine_speed >= rpmFilter.value.min && 
+                                                    a.engine_speed <= rpmFilter.value.max
+                                                );
                 if(data.categories.some(fb => fb == "Feedback Knock Correction* (degrees)" || fb == "Feedback Knock Correction (degrees)")){
                     let data = filteredLogs.filter(f => f.feedback_knock_corr != 0).map(a => new ScatterPoint(a.engine_speed, a.feedback_knock_corr, 5));
                     plots.push(new PlotData(data, 'Engine Speed (rpm)', "Feedback Knock Correction (degrees)", "Feedback Knock Correction vs. Engine RPM", "RPM", "FBKC"));
                 }
                 if(data.categories.some(fb => (fb == "Feedback Knock Correction* (degrees)" || fb == "Feedback Knock Correction (degrees)")) && data.categories.some(fl => fl == "Fine Learning Knock Correction (degrees)" || fl == "Fine Learning Knock Correction* (degrees)") && data.categories.some(el => el == "Engine Load (Calculated) (g/rev)" || el == "Engine Load* (g/rev)" || el == "Engine Load (g/rev)")){
+                    filteredLogs = parsedLogs.filter( a=>
+                                                        a.engine_load >= loadFilter.value.min &&
+                                                        a.engine_load <= loadFilter.value.max
+                                                    );  
                     let data = filteredLogs.filter(a => a.feedback_knock_corr  != 0 || a.fine_knock_corr != 0).map(b => new ScatterPoint(b.engine_speed, b.engine_load, (Math.abs(b.feedback_knock_corr + b.fine_knock_corr))*3));
                     plots.push(new PlotData(data, 'Engine Speed (rpm)', 'Engine Load (g/rev)', "Engine Load vs. Engine RPM where Knock Events Occur", "RPM", "LOAD", "TKNOCK", (x: number) => x/-3));
                 }
                 if(data.categories.some(mp => mp == "Manifold Relative Pressure (psi)")){
+                    filteredLogs = parsedLogs.filter( a=>
+                                                        a.boost >= boostFilter.value.min &&
+                                                        a.boost <= boostFilter.value.max
+                                                    );  
                     let data = filteredLogs.map(a => new ScatterPoint(a.engine_speed, a.boost, 5));
                     plots.push(new PlotData(data, 'Engine Speed (rpm)', 'Manifold Relative Pressure (psi)', "Manifold Relative Pressure vs. Engine RPM", "RPM", "PSI"));
                 }
