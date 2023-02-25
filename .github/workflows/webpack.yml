@@ -10,6 +10,8 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    
+    if: github.ref == 'refs/heads/staging' # run this job only for the dev branch
 
     strategy:
       matrix:
